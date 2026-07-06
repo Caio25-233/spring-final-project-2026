@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>神経衰弱ゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>神経衰弱</h1>
+        <div class="grid" id="board"></div>
+        <p class="status"><a href="index.html">🏠 ホームへ戻る</a></p>
+    </div>
+
+    <script>
+        const symbols = [
+            '🍎', '🍎', '🍌', '🍌', '🍇', '🍇', '🍒', '🍒', '🍍', '🍍', 
+            '🍉', '🍉', '🍋', '🍋', '🥝', '🥝', '🍓', '🍓', '🥕', '🥕'
+        ];
+        symbols.sort(() => 0.5 - Math.random());
+
+        const board = document.getElementById('board');
+        let flippedCards = [];
+
+        symbols.forEach((symbol, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.symbol = symbol;
+            card.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = 'card-back.png'; 
+            card.appendChild(img);
+
+            card.addEventListener('click', flipCard);
+            board.appendChild(card);
+        });
+
+        function flipCard() {
+            if (flippedCards.length >= 2 || this.classList.contains('flipped')) return;
+
+            this.classList.add('flipped');
+            this.textContent = this.dataset.symbol;
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 800);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                card1.style.visibility = 'hidden';
+                card2.style.visibility = 'hidden';
+            } else {
+                resetCard(card1);
+                resetCard(card2);
+            }
+            flippedCards = [];
+        }
+
+        function resetCard(card) {
+            card.classList.remove('flipped');
+            card.textContent = '';
+            const img = document.createElement('img');
+            img.src = 'card-back.png';
+            card.appendChild(img);
+        }
+    </script>
+</body>
+</html>
