@@ -34,29 +34,42 @@ nav ul li a {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(5, 70px);
+    grid-template-rows: repeat(4, 95px);
+    gap: 10px;
     justify-content: center;
-    margin-bottom: 20px;
+    margin: 0 auto;
 }
 
 .card {
-    aspect-ratio: 1 / 1;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+    background-color: transparent;
     cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.15s ease;
+}
+
+.card:hover {
+    transform: scale(1.04);
 }
 
 .card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 6px;
+    pointer-events: none;
 }
 
 
+.card.flipped img {
+    display: none;
+}
+
+.card.flipped {
+    background-color: #ffffff;
+    font-size: 32px;
+}
